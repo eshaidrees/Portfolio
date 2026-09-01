@@ -1,107 +1,239 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Heart, ArrowUp } from "lucide-react";
-
-const GithubIcon = ({ size = 20 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-  </svg>
-);
-
-const LinkedinIcon = ({ size = 20 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <rect x="2" y="9" width="4" height="12" />
-    <circle cx="4" cy="4" r="2" />
-  </svg>
-);
-
-const TwitterIcon = ({ size = 20 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
-  </svg>
-);
+import { FaGithub, FaLinkedinIn, FaTwitter } from "react-icons/fa";
+import { FiMail, FiArrowUp, FiHeart } from "react-icons/fi";
 
 const socialLinks = [
-  { icon: GithubIcon, href: "https://github.com", label: "GitHub" },
-  { icon: LinkedinIcon, href: "https://linkedin.com", label: "LinkedIn" },
-  { icon: TwitterIcon, href: "https://twitter.com", label: "Twitter" },
-  { icon: Mail, href: "mailto:contact@example.com", label: "Email" },
+  {
+    icon: FaGithub,
+    href: "https://github.com/eshaidrees",
+    label: "GitHub",
+  },
+  {
+    icon: FaLinkedinIn,
+    href: "https://www.linkedin.com",
+    label: "LinkedIn",
+  },
+  {
+    icon: FaTwitter,
+    href: "https://twitter.com",
+    label: "Twitter",
+  },
+  {
+    icon: FiMail,
+    href: "mailto:contact@example.com",
+    label: "Email",
+  },
+];
+
+const footerLinks = [
+  { name: "Home", href: "#home" },
+  { name: "About", href: "#about" },
+  { name: "Skills", href: "#skills" },
+  { name: "Projects", href: "#projects" },
+  { name: "Services", href: "#services" },
+  { name: "Contact", href: "#contact" },
 ];
 
 export default function Footer() {
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   return (
-    <footer className="relative border-t border-white/5 bg-[#050510]/90 backdrop-blur-md py-16 mt-32">
-      {/* Decorative top gradient glow line */}
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
+    <footer className="relative mt-20 overflow-hidden border-t border-white/[0.06] bg-[#07070c]">
 
-      <div className="container mx-auto px-6 md:px-12 relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-          {/* Logo & Slogan */}
+      {/* Soft background glow */}
+      <div className="absolute -top-40 left-1/2 h-80 w-80 -translate-x-1/2 rounded-full bg-purple-500/[0.07] blur-[120px] pointer-events-none" />
+
+      <div className="container relative z-10 mx-auto px-6 py-16 md:px-12">
+
+        {/* Main Footer */}
+        <div className="grid gap-12 md:grid-cols-3 md:items-start">
+
+          {/* Brand */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center md:text-left"
+            transition={{ duration: 0.6 }}
           >
-            <h3 className="text-xl font-black gold-gradient tracking-widest font-mono mb-2">{"Portfolio"}</h3>
-            <p className="text-gray-400 text-xs sm:text-sm font-sans max-w-sm">
-              Building ultra-premium digital solutions with pixel-perfect design and blazing fast architectures.
+            <a
+              href="#home"
+              className="inline-block text-2xl font-black tracking-tight"
+            >
+              <span className="bg-gradient-to-r from-purple-400 via-pink-400 to-blue-400 bg-clip-text text-transparent">
+                Esha
+              </span>
+              <span className="text-white">.</span>
+            </a>
+
+            <p className="mt-4 max-w-sm text-sm leading-7 text-gray-400">
+              Web developer focused on building modern, responsive, and
+              high-performance digital experiences with React, Next.js,
+              TypeScript, and AI technologies.
             </p>
+
+            {/* Social icons */}
+            <div className="mt-6 flex gap-3">
+              {socialLinks.map((social) => {
+                const Icon = social.icon;
+
+                return (
+                  <motion.a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.label}
+                    whileHover={{
+                      y: -4,
+                      scale: 1.08,
+                    }}
+                    whileTap={{
+                      scale: 0.95,
+                    }}
+                    className="
+                      flex h-10 w-10 items-center justify-center
+                      rounded-xl
+                      border border-white/10
+                      bg-white/[0.03]
+                      text-gray-400
+                      transition-all duration-300
+                      hover:border-purple-400/40
+                      hover:bg-purple-400/10
+                      hover:text-white
+                    "
+                  >
+                    <Icon size={17} />
+                  </motion.a>
+                );
+              })}
+            </div>
           </motion.div>
 
-          {/* Social Icons Row */}
+          {/* Quick Links */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="flex space-x-4"
+            transition={{ duration: 0.6, delay: 0.1 }}
           >
-            {socialLinks.map((social) => (
-              <motion.a
-                key={social.label}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3.5 glass rounded-xl text-gray-400 hover:text-gold hover:border-gold/30 transition-all duration-300 bg-white/[0.01]"
-                whileHover={{ scale: 1.15, y: -2 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                <social.icon size={16} />
-              </motion.a>
-            ))}
+            <h3 className="mb-5 text-sm font-semibold uppercase tracking-[0.2em] text-white">
+              Quick Links
+            </h3>
+
+            <div className="grid grid-cols-2 gap-y-3">
+              {footerLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  className="
+                    w-fit text-sm text-gray-500
+                    transition-colors duration-300
+                    hover:text-purple-400
+                  "
+                >
+                  {link.name}
+                </a>
+              ))}
+            </div>
           </motion.div>
 
-          {/* Scroll To Top button */}
-          <motion.button
-            onClick={scrollToTop}
-            className="p-3.5 glass rounded-xl text-gold hover:border-gold/30 transition-all duration-300 bg-white/[0.01]"
-            whileHover={{ scale: 1.1, y: -2 }}
-            whileTap={{ scale: 0.9 }}
+          {/* Let's Connect */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <ArrowUp size={16} />
-          </motion.button>
+            <h3 className="mb-5 text-sm font-semibold uppercase tracking-[0.2em] text-white">
+              Let's Connect
+            </h3>
+
+            <p className="max-w-xs text-sm leading-6 text-gray-500">
+              Have a project, idea, or opportunity in mind? I'd love to hear
+              from you.
+            </p>
+
+            <a
+              href="#contact"
+              className="
+                mt-5 inline-flex items-center gap-2
+                rounded-xl
+                border border-purple-400/30
+                bg-purple-400/10
+                px-5 py-3
+                text-xs font-semibold uppercase
+                tracking-wider text-purple-300
+                transition-all duration-300
+                hover:border-purple-400/60
+                hover:bg-purple-400/20
+                hover:text-white
+              "
+            >
+              Start a Conversation
+            </a>
+          </motion.div>
         </div>
 
-        {/* Bottom Panel */}
+        {/* Divider */}
+        <div className="my-10 h-px bg-white/[0.06]" />
+
+        {/* Bottom */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          className="border-t border-white/5 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left"
+          transition={{ duration: 0.6 }}
+          className="
+            flex flex-col items-center justify-between
+            gap-5
+            sm:flex-row
+          "
         >
-          <p className="text-gray-500 text-xs sm:text-sm flex items-center justify-center font-sans">
-            Made with <Heart className="inline-block mx-1.5 text-gold animate-pulse" size={12} /> by
-            <span className="gold-gradient ml-1.5 font-semibold">Esha</span>
+          <p className="flex items-center gap-1.5 text-xs text-gray-500">
+            © {new Date().getFullYear()} Esha. All rights reserved.
           </p>
-          <p className="text-gray-600 text-xs font-mono">
-            © {new Date().getFullYear()} All rights reserved. Built with Next.js & Framer Motion.
+
+          <p className="flex items-center gap-1.5 text-xs text-gray-500">
+            Built with
+            <FiHeart
+              size={12}
+              className="text-pink-400"
+            />
+            using Next.js
           </p>
+
+          {/* Back to top */}
+          <motion.button
+            onClick={scrollToTop}
+            aria-label="Back to top"
+            whileHover={{
+              y: -4,
+              scale: 1.05,
+            }}
+            whileTap={{
+              scale: 0.95,
+            }}
+            className="
+              flex h-10 w-10 items-center justify-center
+              rounded-xl
+              border border-white/10
+              bg-white/[0.03]
+              text-gray-400
+              transition-all duration-300
+              hover:border-purple-400/40
+              hover:bg-purple-400/10
+              hover:text-white
+            "
+          >
+            <FiArrowUp size={17} />
+          </motion.button>
         </motion.div>
       </div>
     </footer>

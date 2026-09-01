@@ -1,8 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Terminal } from "lucide-react";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import {
+  FiMenu,
+  FiX,
+  FiCode,
+  FiArrowUpRight,
+} from "react-icons/fi";
 
 const navItems = [
   { name: "Home", href: "#home" },
@@ -21,149 +26,294 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      setIsScrolled(window.scrollY > 30);
 
-      // Simple active section detection
-      const sections = navItems.map(item => item.href.substring(1));
+      const sections = navItems.map((item) => item.href.substring(1));
+
       let currentSection = "home";
+
       for (const section of sections) {
         const element = document.getElementById(section);
+
         if (element) {
           const rect = element.getBoundingClientRect();
-          if (rect.top <= 150 && rect.bottom >= 150) {
+
+          if (rect.top <= 180 && rect.bottom >= 180) {
             currentSection = section;
             break;
           }
         }
       }
+
       setActiveSection(currentSection);
     };
 
+    handleScroll();
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
+  const handleNavClick = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   return (
-    <motion.nav
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled
-          ? "py-3 bg-[#050510]/80 backdrop-blur-md border-b border-glass-border shadow-lg"
-          : "py-6 bg-transparent"
-      }`}
-    >
-      <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
-        {/* Logo */}
-        <motion.a
-          href="#home"
-          className="text-2xl font-black flex items-center gap-2 group tracking-wider"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          <div className="p-2 rounded-lg bg-gold/10 border border-gold/30 group-hover:border-gold group-hover:bg-gold/20 transition-all duration-300">
-            <Terminal className="text-gold" size={18} />
+    <>
+      {/* =====================================================
+          NAVBAR
+      ====================================================== */}
+
+      <motion.nav
+        initial={{
+          y: -80,
+          opacity: 0,
+        }}
+        animate={{
+          y: 0,
+          opacity: 1,
+        }}
+        transition={{
+          duration: 0.7,
+          ease: "easeOut",
+        }}
+        className={`fixed left-0 right-0 top-0 z-50 transition-all duration-500 ${
+          isScrolled
+            ? "border-b border-white/[0.06] bg-[#050511]/85 py-3 backdrop-blur-xl"
+            : "bg-transparent py-5"
+        }`}
+      >
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 sm:px-8 lg:px-10">
+
+          {/* =================================================
+              LOGO
+          ================================================== */}
+
+          <motion.a
+            href="#home"
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="group flex items-center gap-2.5"
+          >
+            {/* Logo Icon */}
+
+            <div className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-purple-400/20 bg-purple-500/10 transition-all duration-300 group-hover:border-fuchsia-400/40 group-hover:bg-purple-500/20">
+              <FiCode
+                size={18}
+                className="text-purple-300 transition-transform duration-300 group-hover:rotate-6"
+              />
+
+              {/* Small glow */}
+
+              <div className="absolute inset-0 rounded-xl bg-purple-500/10 blur-md opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            </div>
+
+            {/* Logo Text */}
+
+            <span className="text-lg font-black tracking-tight text-white">
+              Portfolio
+              <span className="bg-gradient-to-r from-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">
+                .
+              </span>
+            </span>
+          </motion.a>
+
+          {/* =================================================
+              DESKTOP NAVIGATION
+          ================================================== */}
+
+          <div className="hidden items-center gap-1 lg:flex">
+            {navItems.map((item, index) => {
+              const sectionName = item.href.substring(1);
+              const isActive = activeSection === sectionName;
+
+              return (
+                <motion.a
+                  key={item.name}
+                  href={item.href}
+                  onClick={handleNavClick}
+                  initial={{
+                    opacity: 0,
+                    y: -15,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    duration: 0.4,
+                    delay: index * 0.05,
+                  }}
+                  className={`group relative px-3.5 py-2 text-[11px] font-medium uppercase tracking-[0.12em] transition-colors duration-300 ${
+                    isActive
+                      ? "text-white"
+                      : "text-gray-500 hover:text-gray-200"
+                  }`}
+                >
+                  {item.name}
+
+                  {/* Active underline */}
+
+                  {isActive && (
+                    <motion.span
+                      layoutId="navbar-active"
+                      className="absolute bottom-0 left-3 right-3 h-[2px] rounded-full bg-gradient-to-r from-fuchsia-500 to-cyan-400 shadow-[0_0_10px_rgba(217,70,239,0.45)]"
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+
+                  {/* Hover dot */}
+
+                  {!isActive && (
+                    <span className="absolute bottom-0 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-fuchsia-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                  )}
+                </motion.a>
+              );
+            })}
           </div>
-          <span className="gold-gradient bg-clip-text font-mono">{"Portfolio"}</span>
-        </motion.a>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center space-x-1">
-          {navItems.map((item, index) => {
-            const isActive = activeSection === item.href.substring(1);
-            return (
-              <motion.a
-                key={item.name}
-                href={item.href}
-                className={`relative px-4 py-2 text-xs uppercase tracking-widest font-mono transition-colors duration-300 ${
-                  isActive ? "text-gold font-bold" : "text-gray-400 hover:text-white"
-                }`}
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                whileHover={{ y: -1 }}
-              >
-                {item.name}
-                {isActive && (
-                  <motion.div
-                    layoutId="activeIndicator"
-                    className="absolute bottom-0 left-4 right-4 h-[2px] bg-gradient-to-r from-gold/50 to-gold shadow-[0_0_8px_rgba(212,175,55,0.6)]"
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </motion.a>
-            );
-          })}
-        </div>
+          {/* =================================================
+              DESKTOP CONTACT BUTTON
+          ================================================== */}
 
-        {/* Contact CTA in Desktop */}
-        <div className="hidden md:block">
           <motion.a
             href="#contact"
-            className="relative overflow-hidden group px-5 py-2.5 rounded-full text-xs uppercase tracking-widest font-mono text-gold border border-gold/30 hover:border-gold transition-colors duration-500 inline-block"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={{
+              scale: 1.04,
+            }}
+            whileTap={{
+              scale: 0.97,
+            }}
+            className="hidden items-center gap-2 rounded-full border border-purple-400/25 bg-purple-500/10 px-5 py-2.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-purple-200 transition-all duration-300 hover:border-fuchsia-400/40 hover:bg-fuchsia-500/10 hover:text-white lg:flex"
           >
-            <span className="absolute inset-0 bg-gradient-to-r from-gold/10 to-gold-dark/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
-            <span className="relative z-10">Let's Talk</span>
+            Let's Talk
+
+            <FiArrowUpRight
+              size={13}
+              className="transition-transform duration-300 group-hover:translate-x-0.5"
+            />
           </motion.a>
+
+          {/* =================================================
+              MOBILE MENU BUTTON
+          ================================================== */}
+
+          <motion.button
+            type="button"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            whileTap={{
+              scale: 0.92,
+            }}
+            aria-label="Toggle navigation menu"
+            className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/[0.08] bg-white/[0.04] text-gray-300 transition-all duration-300 hover:border-purple-400/30 hover:text-white lg:hidden"
+          >
+            {isMobileMenuOpen ? (
+              <FiX size={20} />
+            ) : (
+              <FiMenu size={20} />
+            )}
+          </motion.button>
         </div>
 
-        {/* Mobile Menu Button */}
-        <motion.button
-          className="md:hidden p-2 rounded-lg text-gray-400 hover:text-white bg-white/5 border border-glass-border hover:border-gold/30 transition-all"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          whileTap={{ scale: 0.95 }}
-        >
-          {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-        </motion.button>
-      </div>
+        {/* ===================================================
+            MOBILE MENU
+        ==================================================== */}
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="md:hidden absolute top-full left-0 right-0 bg-[#050510]/95 backdrop-blur-xl border-b border-glass-border shadow-2xl overflow-hidden"
-          >
-            <div className="px-6 py-8 flex flex-col space-y-4">
-              {navItems.map((item, index) => {
-                const isActive = activeSection === item.href.substring(1);
-                return (
-                  <motion.a
-                    key={item.name}
-                    href={item.href}
-                    className={`text-sm uppercase tracking-wider font-mono py-2 border-b border-white/5 flex items-center justify-between ${
-                      isActive ? "text-gold font-bold" : "text-gray-400 hover:text-white"
-                    }`}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: index * 0.05 }}
-                  >
-                    <span>{item.name}</span>
-                    {isActive && <div className="w-1.5 h-1.5 rounded-full bg-gold shadow-[0_0_8px_rgba(212,175,55,0.6)]" />}
-                  </motion.a>
-                );
-              })}
-              <motion.a
-                href="#contact"
-                className="w-full text-center py-3 rounded-lg text-sm uppercase tracking-widest font-mono text-[#050510] bg-gold hover:bg-gold-light transition-colors block"
-                onClick={() => setIsMobileMenuOpen(false)}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: navItems.length * 0.05 }}
-              >
-                Get In Touch
-              </motion.a>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{
+                opacity: 0,
+                height: 0,
+              }}
+              animate={{
+                opacity: 1,
+                height: "auto",
+              }}
+              exit={{
+                opacity: 0,
+                height: 0,
+              }}
+              transition={{
+                duration: 0.3,
+                ease: "easeInOut",
+              }}
+              className="overflow-hidden border-t border-white/[0.06] bg-[#050511]/95 backdrop-blur-2xl lg:hidden"
+            >
+              <div className="mx-auto max-w-7xl px-6 py-6 sm:px-8">
+
+                <div className="flex flex-col gap-1">
+                  {navItems.map((item, index) => {
+                    const sectionName = item.href.substring(1);
+                    const isActive =
+                      activeSection === sectionName;
+
+                    return (
+                      <motion.a
+                        key={item.name}
+                        href={item.href}
+                        onClick={handleNavClick}
+                        initial={{
+                          opacity: 0,
+                          x: -15,
+                        }}
+                        animate={{
+                          opacity: 1,
+                          x: 0,
+                        }}
+                        transition={{
+                          delay: index * 0.04,
+                        }}
+                        className={`flex items-center justify-between rounded-xl px-4 py-3.5 text-sm transition-all duration-300 ${
+                          isActive
+                            ? "bg-purple-500/10 text-white"
+                            : "text-gray-500 hover:bg-white/[0.03] hover:text-white"
+                        }`}
+                      >
+                        <span>{item.name}</span>
+
+                        {isActive && (
+                          <span className="h-1.5 w-1.5 rounded-full bg-gradient-to-r from-fuchsia-400 to-cyan-400 shadow-[0_0_8px_rgba(217,70,239,0.6)]" />
+                        )}
+                      </motion.a>
+                    );
+                  })}
+                </div>
+
+                {/* Mobile CTA */}
+
+                <motion.a
+                  href="#contact"
+                  onClick={handleNavClick}
+                  initial={{
+                    opacity: 0,
+                    y: 10,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                  }}
+                  transition={{
+                    delay: navItems.length * 0.04,
+                  }}
+                  className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-fuchsia-500 via-purple-500 to-cyan-400 px-5 py-3.5 text-xs font-bold uppercase tracking-widest text-white shadow-lg shadow-purple-500/10"
+                >
+                  Let's Talk
+
+                  <FiArrowUpRight size={15} />
+                </motion.a>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
+    </>
   );
 }

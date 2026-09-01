@@ -11,23 +11,21 @@ import BackgroundParticles from "@/components/BackgroundParticles";
 
 export default function Home() {
   return (
-    <main className="min-h-screen relative bg-[#050510]">
-      {/* Animated premium background layer */}
+    <main className="min-h-screen relative bg-[#050510] overflow-x-hidden">
+      {/* Global background */}
       <div className="aurora-bg" />
       <BackgroundParticles />
 
-      {/* Structured layers */}
-      <div className="relative z-10 flex flex-col">
-        <Navbar />
+      {/* Main content */}
+      <div className="relative z-10">
         <Hero />
         <About />
         <Skills />
         <Projects />
-        <Services />
         <Education />
         <Contact />
-        <Footer />
       </div>
+
     </main>
   );
 }

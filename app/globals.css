@@ -1,189 +1,406 @@
 @import "tailwindcss";
 
+/* =========================================================
+   ROOT THEME
+========================================================= */
+
 :root {
   --background: #050510;
   --foreground: #f5f5f5;
+
   --gold: #d4af37;
   --gold-light: #f4e4a6;
-  --gold-dark: #b8941e;
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --gold-dark: #a88420;
+
   --neon-blue: #00d4ff;
   --neon-purple: #a855f7;
   --neon-pink: #ec4899;
+
+  --glass-bg: rgba(255, 255, 255, 0.035);
+  --glass-border: rgba(255, 255, 255, 0.09);
 }
+
+/* =========================================================
+   TAILWIND THEME
+========================================================= */
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+
   --color-gold: var(--gold);
   --color-gold-light: var(--gold-light);
   --color-gold-dark: var(--gold-dark);
-  --color-glass-bg: var(--glass-bg);
-  --color-glass-border: var(--glass-border);
+
   --color-neon-blue: var(--neon-blue);
   --color-neon-purple: var(--neon-purple);
   --color-neon-pink: var(--neon-pink);
+
+  --color-glass-bg: var(--glass-bg);
+  --color-glass-border: var(--glass-border);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
-  overflow-x: hidden;
-}
+/* =========================================================
+   HTML / BODY
+========================================================= */
 
-/* Aurora background animation */
-.aurora-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  overflow: hidden;
-  background: linear-gradient(180deg, #050510 0%, #0a0a1a 50%, #050510 100%);
-}
-
-.aurora-bg::before,
-.aurora-bg::after {
-  content: "";
-  position: absolute;
-  width: 150%;
-  height: 150%;
-  top: -25%;
-  left: -25%;
-  background: radial-gradient(ellipse at center, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
-              radial-gradient(ellipse at 80% 20%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
-              radial-gradient(ellipse at 20% 80%, rgba(212, 175, 55, 0.08) 0%, transparent 50%);
-  animation: aurora 20s ease-in-out infinite;
-}
-
-.aurora-bg::after {
-  animation-delay: -10s;
-  opacity: 0.7;
-}
-
-@keyframes aurora {
-  0%, 100% {
-    transform: translate(0, 0) rotate(0deg) scale(1);
-  }
-  25% {
-    transform: translate(5%, 5%) rotate(5deg) scale(1.1);
-  }
-  50% {
-    transform: translate(-5%, 10%) rotate(-5deg) scale(0.9);
-  }
-  75% {
-    transform: translate(10%, -5%) rotate(3deg) scale(1.05);
-  }
-}
-
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: #050510;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--gold);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--gold-light);
-}
-
-/* Glassmorphism utility */
-.glass {
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
-}
-
-/* Gold gradient text */
-.gold-gradient {
-  background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 50%, var(--gold-dark) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Neon gradient text */
-.neon-gradient {
-  background: linear-gradient(135deg, var(--neon-blue) 0%, var(--neon-purple) 50%, var(--neon-pink) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* Glow effects */
-.glow-gold {
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3), 0 0 40px rgba(212, 175, 55, 0.1);
-}
-
-.glow-blue {
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3), 0 0 40px rgba(0, 212, 255, 0.1);
-}
-
-.glow-purple {
-  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3), 0 0 40px rgba(168, 85, 247, 0.1);
-}
-
-.text-glow {
-  text-shadow: 0 0 20px rgba(212, 175, 55, 0.5), 0 0 40px rgba(212, 175, 55, 0.3);
-}
-
-/* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+  background: var(--background);
 }
 
-/* Selection styling */
-::selection {
-  background: var(--gold);
-  color: #0a0a0a;
+body {
+  margin: 0;
+  padding: 0;
+
+  min-height: 100vh;
+
+  background: var(--background);
+  color: var(--foreground);
+
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+
+  overflow-x: hidden;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-/* Particle animation */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0) translateX(0);
+/* =========================================================
+   MAIN AURORA BACKGROUND
+========================================================= */
+
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  z-index: -10;
+
+  overflow: hidden;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 50% 15%,
+      rgba(168, 85, 247, 0.08),
+      transparent 35%
+    ),
+    radial-gradient(
+      circle at 85% 45%,
+      rgba(0, 212, 255, 0.05),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 15% 75%,
+      rgba(212, 175, 55, 0.045),
+      transparent 30%
+    ),
+    #050510;
+}
+
+/* =========================================================
+   AURORA LIGHT
+========================================================= */
+
+.aurora-bg::before {
+  content: "";
+
+  position: absolute;
+
+  width: 900px;
+  height: 900px;
+
+  left: 50%;
+  top: 10%;
+
+  transform: translate(-50%, -50%);
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(168, 85, 247, 0.10) 0%,
+      rgba(0, 212, 255, 0.04) 35%,
+      transparent 70%
+    );
+
+  filter: blur(80px);
+
+  opacity: 0.8;
+
+  animation: auroraFloat 18s ease-in-out infinite;
+
+  will-change: transform;
+}
+
+.aurora-bg::after {
+  content: "";
+
+  position: absolute;
+
+  width: 700px;
+  height: 700px;
+
+  right: -200px;
+  bottom: -200px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(212, 175, 55, 0.07),
+      rgba(168, 85, 247, 0.04) 40%,
+      transparent 70%
+    );
+
+  filter: blur(90px);
+
+  animation: auroraFloatReverse 22s ease-in-out infinite;
+
+  will-change: transform;
+}
+
+/* =========================================================
+   AURORA ANIMATION
+========================================================= */
+
+@keyframes auroraFloat {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
   }
-  25% {
-    transform: translateY(-20px) translateX(10px);
-  }
+
   50% {
-    transform: translateY(-10px) translateX(-10px);
-  }
-  75% {
-    transform: translateY(-30px) translateX(5px);
+    transform: translate(-45%, -45%) scale(1.12);
   }
 }
+
+@keyframes auroraFloatReverse {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+
+  50% {
+    transform: translate(-60px, -40px) scale(1.1);
+  }
+}
+
+/* =========================================================
+   SUBTLE DOT GRID
+========================================================= */
+
+.dot-grid {
+  position: absolute;
+  inset: 0;
+
+  background-image:
+    radial-gradient(
+      rgba(255, 255, 255, 0.07) 1px,
+      transparent 1px
+    );
+
+  background-size: 32px 32px;
+
+  opacity: 0.12;
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   GLASSMORPHISM
+========================================================= */
+
+.glass {
+  background: rgba(255, 255, 255, 0.035);
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025),
+    0 10px 40px rgba(0, 0, 0, 0.15);
+
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.glass:hover {
+  border-color: rgba(212, 175, 55, 0.18);
+
+  background: rgba(255, 255, 255, 0.045);
+}
+
+/* =========================================================
+   GOLD TEXT
+========================================================= */
+
+.gold-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--gold-light) 0%,
+    var(--gold) 50%,
+    var(--gold-dark) 100%
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+}
+
+/* =========================================================
+   NEON TEXT
+========================================================= */
+
+.neon-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--neon-blue) 0%,
+    var(--neon-purple) 50%,
+    var(--neon-pink) 100%
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+}
+
+/* =========================================================
+   TEXT GLOW
+========================================================= */
+
+.text-glow {
+  text-shadow:
+    0 0 15px rgba(212, 175, 55, 0.25),
+    0 0 35px rgba(212, 175, 55, 0.12);
+}
+
+/* =========================================================
+   GOLD GLOW
+========================================================= */
+
+.glow-gold {
+  box-shadow:
+    0 0 15px rgba(212, 175, 55, 0.25),
+    0 0 35px rgba(212, 175, 55, 0.08);
+}
+
+/* =========================================================
+   BLUE GLOW
+========================================================= */
+
+.glow-blue {
+  box-shadow:
+    0 0 15px rgba(0, 212, 255, 0.22),
+    0 0 35px rgba(0, 212, 255, 0.08);
+}
+
+/* =========================================================
+   PURPLE GLOW
+========================================================= */
+
+.glow-purple {
+  box-shadow:
+    0 0 15px rgba(168, 85, 247, 0.22),
+    0 0 35px rgba(168, 85, 247, 0.08);
+}
+
+/* =========================================================
+   PARTICLES
+========================================================= */
 
 .particle {
   position: absolute;
-  width: 4px;
-  height: 4px;
-  background: var(--gold);
+
+  width: 3px;
+  height: 3px;
+
   border-radius: 50%;
-  opacity: 0.3;
-  animation: float 10s ease-in-out infinite;
+
+  background: var(--gold);
+
+  opacity: 0.45;
+
+  box-shadow:
+    0 0 6px rgba(212, 175, 55, 0.7),
+    0 0 14px rgba(212, 175, 55, 0.25);
+
+  animation: particleFloat 8s ease-in-out infinite;
+
+  pointer-events: none;
+
+  will-change: transform, opacity;
 }
 
-/* Gradient border animation */
-@keyframes borderGlow {
-  0%, 100% {
-    border-color: rgba(212, 175, 55, 0.3);
+/* Different particle sizes */
+
+.particle-small {
+  width: 2px;
+  height: 2px;
+}
+
+.particle-large {
+  width: 4px;
+  height: 4px;
+}
+
+/* =========================================================
+   PARTICLE FLOAT
+========================================================= */
+
+@keyframes particleFloat {
+  0% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.15;
   }
+
+  25% {
+    transform: translate3d(8px, -15px, 0);
+    opacity: 0.45;
+  }
+
   50% {
-    border-color: rgba(212, 175, 55, 0.6);
+    transform: translate3d(-8px, -28px, 0);
+    opacity: 0.7;
+  }
+
+  75% {
+    transform: translate3d(10px, -15px, 0);
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: translate3d(0, 0, 0);
+    opacity: 0.15;
+  }
+}
+
+/* =========================================================
+   BORDER GLOW
+========================================================= */
+
+@keyframes borderGlow {
+  0%,
+  100% {
+    border-color: rgba(212, 175, 55, 0.2);
+  }
+
+  50% {
+    border-color: rgba(212, 175, 55, 0.5);
   }
 }
 
@@ -191,18 +408,131 @@ html {
   animation: borderGlow 3s ease-in-out infinite;
 }
 
-/* Shimmer effect */
+/* =========================================================
+   SHIMMER
+========================================================= */
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.06),
+    transparent
+  );
+
+  background-size: 1000px 100%;
+
+  animation: shimmer 3s linear infinite;
+}
+
 @keyframes shimmer {
-  0% {
+  from {
     background-position: -1000px 0;
   }
-  100% {
+
+  to {
     background-position: 1000px 0;
   }
 }
 
-.shimmer {
-  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.05) 50%, transparent 100%);
-  background-size: 1000px 100%;
-  animation: shimmer 3s infinite;
+/* =========================================================
+   CUSTOM SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050510;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    var(--gold-light),
+    var(--gold),
+    var(--gold-dark)
+  );
+
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-light);
+}
+
+/* Firefox */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold) #050510;
+}
+
+/* =========================================================
+   TEXT SELECTION
+========================================================= */
+
+::selection {
+  background: var(--gold);
+  color: #050510;
+}
+
+/* =========================================================
+   LINKS
+========================================================= */
+
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* =========================================================
+   MOBILE OPTIMIZATION
+========================================================= */
+
+@media (max-width: 768px) {
+  .aurora-bg::before {
+    width: 600px;
+    height: 600px;
+
+    filter: blur(60px);
+  }
+
+  .aurora-bg::after {
+    width: 450px;
+    height: 450px;
+
+    filter: blur(65px);
+  }
+
+  .glass {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
 }
