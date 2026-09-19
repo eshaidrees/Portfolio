@@ -14,7 +14,7 @@ const projects = [
     description:
       "A modern bakery e-commerce website designed to showcase cakes, pastries, and custom bakery products with a smooth and user-friendly shopping experience.",
     tags: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
-    image: "/images/hero2.png",
+    image: "/images/ms-cakes.png",
     github: "https://github.com/eshaidrees/MS_Cakes.git",
     live: "https://mscakesandbakes.vercel.app",
     featured: true,
@@ -92,7 +92,7 @@ const projects = [
     title: "Figma Design System",
     description:
       "A reusable UI design system created in Figma with structured components, consistent visual patterns, and reusable interface elements for modern digital products.",
-    tags: ["Figma", "Design System", "UI Components", "Prototyping"],
+    tags: ["Figma", "Design System", "UI Components", "Next.js"],
     image: "/images/Figma.png",
     github:
       "https://github.com/eshaidrees/class-assignment-2-figma-design.git",
@@ -109,6 +109,7 @@ const projects = [
       "React",
       "TypeScript",
       "Tailwind CSS",
+      "Sanity",
       "Framer Motion",
     ],
     image: "/images/Sofa_web.png",
@@ -121,7 +122,7 @@ const projects = [
     title: "Todo Application",
     description:
       "A productivity application for organizing daily tasks with categories, task management, progress tracking, and a simple responsive interface.",
-    tags: ["React", "TypeScript", "Local Storage", "DnD Kit"],
+    tags: ["React", "TypeScript", "Local Storage", "Open AI"],
     image: "/images/Todo-App.png",
     github: "https://github.com",
     live: "https://example.com",
