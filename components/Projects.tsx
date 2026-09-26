@@ -14,7 +14,7 @@ const projects = [
     description:
       "A modern bakery e-commerce website designed to showcase cakes, pastries, and custom bakery products with a smooth and user-friendly shopping experience.",
     tags: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
-    image: "/images/ms-cakes.png",
+    image: "/images/ms-cakes-and-bakes.png",
     github: "https://github.com/eshaidrees/MS_Cakes.git",
     live: "https://mscakesandbakes.vercel.app",
     featured: true,
